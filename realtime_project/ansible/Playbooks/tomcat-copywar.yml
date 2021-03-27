@@ -1,0 +1,20 @@
+--- #######COPYING WAR FILE
+- hosts: server2
+  user: ansibleadmin
+  become: yes
+  tasks:
+   - name: Stop Tomcat
+     command: nohup /usr/local/tomcat/apache-tomcat-7.0.85/bin/shutdown.sh
+
+   - name: sopying war file
+     copy: src=sample.war dest=/usr/local/tomcat/apache-tomcat-7.0.85/webapps
+     #     copy: src=/mnt/sureshmaven.war dest=/usr/local/tomcat/apache-tomcat-7.0.82/webapps
+     #         
+     #            #- name: downloadin war from source repo
+     #                # get_url: url=https://tomcat.apache.org/tomcat-6.0-doc/appdev/sample/sample.war dest=/usr/local/tomcat/apache-tomcat-7.0.81/webapps
+     #                #   - name: Extracting WAR file
+     #                #     command: jar xvf sample sample.war
+     #
+   - name: Sarting Tomcat
+     command: nohup /usr/local/tomcat/apache-tomcat-7.0.85/bin/startup.sh
+   

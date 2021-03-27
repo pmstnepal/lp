@@ -1,0 +1,9 @@
+---
+### Connection FIle for Roles 
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  gather_facts: yes
+  roles:
+    - webserver_role
+    

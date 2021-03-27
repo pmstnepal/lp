@@ -1,0 +1,16 @@
+---
+### -----Play for vars------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  vars_prompt:
+    - name: pkg4
+      prompt: Enter the package Name
+      private: no
+    
+  tasks: 
+    - name: Inatlling package with vars
+      yum: 
+        name: "{{pkg4}}"
+        state: present
+

@@ -1,0 +1,13 @@
+---
+### -----Play for vars------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  vars_files:
+    - varsfile.yml
+  tasks: 
+    - name: Inatlling package with vars
+      yum: 
+        name: "{{pkg2}}"
+        state: present
+

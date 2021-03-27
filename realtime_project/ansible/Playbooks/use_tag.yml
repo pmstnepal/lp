@@ -1,0 +1,9 @@
+---
+### -----Play for webserver------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  tasks:
+    - include_tasks: tags2.yml
+      tags:
+        - copyindexfile

@@ -1,0 +1,17 @@
+---  #### USING OF COMMAND SHELL RAW  SCRIPTS  #########
+- hosts: server2
+  remote_user: ansibleadmin     
+  become: yes
+  tasks:
+    - name: Creating file with COMMAND Module
+      command: touch /tmp/testfile
+
+    - name: listing all files with SHELL Module
+      shell: ls -l > /tmp/lsoutput
+
+    - name: Creatin Directory with RAW Module
+      raw: mkdir /tmp/ansdir
+
+    - name: Executing a script with SCRIPT Module
+      script: ./myscript.sh
+

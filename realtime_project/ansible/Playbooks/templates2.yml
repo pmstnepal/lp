@@ -1,0 +1,20 @@
+---   ### handler usage
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: installing httpd package 
+      yum: 
+        name: httpd 
+        state: present
+    - name: copy index.html
+      template: 
+        src: index.html.j2 
+        dest: /var/www/html/index.html
+      notify: start httpd service
+  
+  handlers: 
+   - name: start httpd service
+     service: name=httpd state=restarted

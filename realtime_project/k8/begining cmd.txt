@@ -1,0 +1,74 @@
+Master at least 2core CPUs & 4GB RAM
+Nodes at least 1core CPU & 4 GB RAM
+
+// On Master
+sudo Kubeadm init --pod-network-cidr=<> --apiserver-advertise-address=<ip-address-ofmaster>
+// For starting a Calico CNI: 192.168.0.0/16 or For starting a Flannel CNI: 10.244.0.0/16
+it looks as follows using calico CNI
+sudo Kubeadm init --pod-network-cidr=19.168.0.0/16  --apiserver-advertise-address=192.168.56.101 
+
+after executing this command you will also get note joining code at the end of the result
+
+//Run the following commands as normal user
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Kubectl get nodes				// Status of Nodes
+kubectl get pods --all-namespaces		// Status of PODS
+kubectl get -o wide pods --all namespaces	// Detailed status of PODS
+
+// For creating a POD based on Calico
+kubectl apply -f https://docs.porjectcalico.org/v3.0/getting-
+started/kubernetes/installation/hosted/kubeadm/1.7/calico.ymnl
+
+// For Creating the dashboard first - bring this up before starting Nodes
+kubectl create -f https://raw.githubusercontent.com/cubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+// To enable proxy and continues with new terminal window
+kubectl proxy
+
+{--
+creating service account and giving role
+//To create a service account for your dashboard
+kubectl create serviceaccount dashboard -n default
+
+//To add cluster binding rules for ur roles on dashboard
+kubectl create clusterrolebinding dashboard-admin -n default\
+  --clusterole=cluster-admin \
+  -serviceaccount=default:dashboard
+--}
+
+// To get the secret key to be pasted onto the dashboard token pwd. Copy the outcoming secret key
+kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | based60 --decode
+
+// Goto https://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login for accessing the dashboard
+
+// On Nodes run the Join command that was obtained on 'kubeadnm init'. Replace the ip with that of Master's, token and discoverty flags from below line
+
+// To create a new project just click on the create botton at right top corner and follow the details
+
+// Now your cluster is setup ;)
+
+// For generating the token again, run in Master 
+sudo Kubeadm crete --print-join-command
+
+// On Master, Cor deploying an NGINX App through CLI. Usually its done via YAML file.
+
+kuberctl create deployment nginx --image=nginx			// 1st, create a deployment
+kuberctl get deployments					// Verify the deployment
+kuberctl describe deployment nginx				// More details about the deployment
+kubectl create service nodeport nginx --tcp=80:80		// Create the service on the nodes
+kubectl get svc							// To check which deployment is running on  which node
+kubectl delete deployment <name>				// To delete the deployment
+
+
+// Create a Deployment using YAML
+kubectl create -f deployment.yaml
+
+kubectl get deployments					// To view the deployments
+kubectl describe deployment <name>			// More details about the deployment
+
+kubectl drain <node name> --delete-local-data --force --ignore-daemonsets 	// to drain a particular node
+kubectl delete node <name node>							// to delete a node
+kubectl reset --ignore-preflight-errors=...					// to empty Kubernetes repository

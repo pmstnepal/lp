@@ -1,0 +1,14 @@
+---    
+- hosts: server2
+  user: ansibleadmin
+  become: yes
+  tasks: 
+    - name: Installing Multiple Packages with LOOPS
+      yum: 
+        name: "{{ item }}"
+        state: present
+      with_items: 
+      - elinks
+      - finger
+      - tree
+

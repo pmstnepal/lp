@@ -1,0 +1,22 @@
+---
+### -----Play for Ignore errors------------
+- hosts: server2
+  remote_user: ansibleadmin
+  become: yes
+  tasks: 
+    - name: Inatlling webserver
+      yum: 
+        name: httttpd    ##WORNG PACKAGE NAME
+        state: present
+      ignore_errors: yes
+
+    - name: copy index.html 
+      copy: 
+        src: index.html  
+        dest: /var/www/html/index.html
+
+    - name: start the httpd service
+      service: 
+        name: httpd 
+        state: started 
+        enabled: yes

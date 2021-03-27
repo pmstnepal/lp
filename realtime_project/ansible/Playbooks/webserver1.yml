@@ -1,0 +1,17 @@
+---
+#########################################################
+#  First Playbook for webserver install and configure   #
+#########################################################
+- hosts: allservers
+  remote_user: ansibleadmin
+  become: yes
+  tasks:
+    - name: Installing HTTPD Package
+      yum: name=httpd state=present
+  
+    - name: Copy index.html file to document root
+      copy: src=index.html  dest=/var/www/html/index.html
+
+    - name: Starting HTTPD service
+      service: name=httpd state=started
+

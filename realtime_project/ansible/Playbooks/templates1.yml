@@ -1,0 +1,11 @@
+---     #######EXAMPLE FOR TEMPLATES WIT MOTD
+- hosts: webservers
+  user: ansibleadmin
+  become: yes
+  gather_facts: yes
+  tasks:
+   - name: copynew MOTD file with Templates
+     template: 
+       src: motd.j2 
+       dest: /etc/motd
+

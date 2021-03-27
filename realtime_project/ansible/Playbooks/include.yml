@@ -1,0 +1,7 @@
+---
+### -----Play for webserver------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  tasks:
+    - include: web_include.yml 

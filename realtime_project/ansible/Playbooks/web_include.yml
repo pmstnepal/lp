@@ -1,0 +1,16 @@
+---   ####### Example for REUSABLE of the code  
+- name: Installing HTTPD on webservers
+  yum:
+    name: httpd 
+    state: present
+- name: copy index file
+  copy: 
+    src: index.html 
+    dest: /var/www/html/index.html
+
+- name: starting httpd service
+  service: 
+    name: httpd 
+    state: started 
+    enabled: yes
+

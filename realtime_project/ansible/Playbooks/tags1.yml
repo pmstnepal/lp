@@ -1,0 +1,27 @@
+---
+### -----Play for webserver------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  tasks: 
+    - name: Inatlling webserver
+      yum: 
+        name: httpd 
+        state: present
+      tags:
+        - installhttpd
+
+    - name: copy index.html 
+      copy: 
+        src: index.html  
+        dest: /var/www/html/index.html
+      tags: 
+        - copyindexfile
+
+    - name: start the httpd service
+      service: 
+        name: httpd 
+        state: started 
+        enabled: yes
+      tags:
+        - restarthttpd

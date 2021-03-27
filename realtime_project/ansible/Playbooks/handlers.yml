@@ -1,0 +1,17 @@
+---   ### handler usage
+- hosts: server2
+  remote_user: ansibleadmin
+  become: yes
+
+  tasks:
+    - name: modified index.html, on exsisting webservers
+      copy: 
+        src: index.html 
+        dest: /var/www/html/index.html
+      notify: restart httpd service
+  
+  handlers: 
+   - name: restart httpd service
+     service: 
+       name: httpd 
+       state: restarted

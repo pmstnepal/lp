@@ -1,0 +1,11 @@
+---
+### -----Play for extra_vars------------
+- hosts: '{{host}}'
+  remote_user: ansibleadmin
+  become: yes
+  tasks: 
+    - name: Inatlling packages with vars
+      yum: 
+        name: finger
+        state: present
+

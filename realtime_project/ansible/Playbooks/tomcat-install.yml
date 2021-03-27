@@ -1,0 +1,19 @@
+--- ##### TOMCAT  INSTALLATION WITH ANSIBLE
+- hosts: server2
+  remote_user: ansibleadmin
+  become: yes
+  tasks:
+    - name: remove older version of tomcat
+      file: path=/usr/local/tomcat state=absent
+    - name: download tomcat
+      get_url: url=http://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.85/bin/apache-tomcat-7.0.85.tar.gz dest=/tmp
+    - name: create tomcat folder
+      file:
+        path: /usr/local/tomcat
+        state: directory
+    - name: extract archive
+      unarchive: src=/tmp/apache-tomcat-7.0.85.tar.gz dest=/usr/local/tomcat copy=no
+    - name: create tomcat users
+      copy: src=/home/ansibleadmin/playbooks/tomcat-users.xml dest=/usr/local/tomcat/apache-tomcat-7.0.85/conf/tomcat-users.xml
+    - name: start tomcat
+      command: nohup /usr/local/tomcat/apache-tomcat-7.0.85/bin/startup.sh &

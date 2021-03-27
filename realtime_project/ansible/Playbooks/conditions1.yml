@@ -1,0 +1,18 @@
+---   ##### Example for Conditions
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  gather_facts: yes
+  tasks:
+   - name: Installing FINGER package when hostname is server2
+     yum: 
+       name: finger
+       state: present
+     when: ansible_hostname == "server2"
+  
+   - name: Install ELINKS package when hostname is server3
+     yum: 
+       name: elinks 
+       state: present
+     when: ansible_hostname == "server3"
+

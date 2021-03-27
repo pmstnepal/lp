@@ -1,0 +1,25 @@
+---
+### -----Play for webserver with register------------
+- hosts: server2
+  remote_user: ansibleadmin
+  become: yes
+  tasks: 
+    - name: Inatlling webserver
+      yum: 
+        name: httpd 
+        state: present
+
+    - name: copy index.html 
+      copy: 
+        src: index.html  
+        dest: /var/www/html/index.html
+
+    - name: start the httpd service
+      service: 
+        name: httpd 
+        state: started 
+        enabled: yes
+      register: result
+    - debug: var=result
+
+

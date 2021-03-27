@@ -1,0 +1,18 @@
+---
+### -----Play for webserver------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  gather_facts: yes
+  tasks: 
+    - name: Inatlling webserver in Redhat Servers
+      yum: 
+        name: httpd 
+        state: present
+      when: ansible_os_family == "RedHat" 
+    
+    - name: Inastalling webserver in Debian Servers
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"

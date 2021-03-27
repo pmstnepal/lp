@@ -1,0 +1,20 @@
+---
+### -----Play for webserver with registeri with file exsits------------
+- hosts: webservers
+  remote_user: ansibleadmin
+  become: yes
+  tasks: 
+    - name: copy index.html 
+      stat: 
+        path: /var/www/html/index.html
+      register: checkindexfile
+    #- debug: var=checkindexfile  
+    
+    - name: Install Curl
+      yum: 
+        name: curl
+        state: present
+      #when: checkindexfile.stat.exists == True
+      when: checkindexfile.stat.exists != True
+   
+
