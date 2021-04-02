@@ -1,0 +1,132 @@
+In this video, we demonstrate
+how a Deployment's state is recorded
+by performing a rolling update and a rollback.
+Now, let's create a simple Deployment.
+'kubectl create deployment mynginx --image=nginx: 1.15-alpine'
+And now, use 'kubectl get deploy,rs,po'.
+As you notice, we're using the short versions
+of the API resource names.
+And I don't want to display all the deployments,
+all the ReplicaSets, and all the Pods.
+I want to only display the ones
+that are '-l app=mynginx'.
+So, it only displays the mynginx deployment,
+the ReplicaSet associated with this deployment,
+and then, the only Pod that was created
+with this deployment.
+And we see that the Pod is running,
+and everything is in ready.
+Now what I would like to do is
+scale the deployment up to three replicas.
+'kubectl scale deploy mynginx --replicas=3'
+Whoops.
+I forgot to provide the number of replicas  '--replicas=3'.
+Equals three.
+And, again, let's list the deployment,
+the ReplicaSet, and the Pods.
+So this time, we have three running Pods,
+three replicas, and the deployment is ready.
+Let's remember the name of the ReplicaSet.
+So let's remember for the ReplicaSet mynginx,
+the cfcc running stream.
+We want to remember this for future
+to see how this state is recorded
+for this particular deployment.
+And this being our initial ReplicaSet,
+it will undergo several changes
+throughout the rolling update and the rollback processes.
+I could also issue a 'kubectl describe deployment'.
+And, specifically what I'm looking for is the image.
+The image is nginx: version 1.15-alpine.
+Now, for the purposes of rolling updates and rollbacks,
+we could also use the 'kubectl rollout' command.
+And first, I want to see the rollout history.
+Of the mynginx deployment.
+And so far, we only have a single revision.
+And that is for the current state of the deployment.
+And revision one is associated with the nginx 1.15 image.
+And it is associated with the ReplicaSet ending with cfcc.
+Now, I can also further display details about the revision,
+by providing revision number.
+So in this case, is revision one.
+And we see in the revision information display,
+again, the image is displayed as nginx 1.15-alpine.
+Now, let's keep an eye on the images as they change
+throughout the rolling update and the rollback processes.
+Now, if I tried to display a different revision,
+maybe revision two, there is no such revision, yet.
+Now, let's perform a rolling update.
+Now remember, a rolling update
+does not necessarily mean an upgrade.
+I could perform a rolling update
+and actually move down in the image version.
+But in this case, we will be moving up,
+so, the rolling update will also perform
+an upgrade on our image.
+So let's upgrade our image.
+'kubectl set image deployment mynginx nginx=nginx:1.16-alpine'
+Now, the image has been updated.
+So, I could look at the rollout history of the deployment.
+And now we have two revisions.
+One was for the original state,
+and two is for the most recent state.
+Let's look at details of each.
+Let's look at revision one first.
+And we see that it was for the 1.15-alpine image.
+And if we display details of the revision two,
+it shows the 1.16-alpine image, the updated image.
+Now, let's take a quick look at our objects.
+So let's display Deployment, ReplicaSets,
+and Pods for the mynginx app.
+So we have the same Deployment.
+Three replicas ready.
+We have the three Pods running.
+However, if we're looking at the ReplicaSets,
+we will see that the original ReplicaSet
+that we had set up originally with three replicas, the cfcc,
+now it has been scaled down to zero.
+So this ReplicaSet is recorded
+as the original state of my deployment.
+And with the original state, I could basically
+rollback to this state any time I want.
+And the new ReplicaSet, ending in 8444,
+with three running Pods, three replicas,
+is associated with the new and current 1.16-alpine image.
+And that same ReplicaSet is associated
+with the revision number two.
+Now, if I'm not happy with the revision number two,
+I can always just rollback to revision one.
+So, I can issue a 'kubectl rollout undo deployment mynginx --to-revision=1'
+So, it says that my deployment has been rolled back.
+Let's take a look at rollout history.
+And now we see that we have revision two and three.
+So revision number one, which was the original revision,
+becomes revision number three,
+which is the most current revision.
+And number two is still associated
+with the nginx image 1.16.
+So revision two is associated with 1.16.
+Revision number three is associated
+with the rolled back version of 1.15.
+And now, if I'm trying to pull up
+the revision number one, that is no longer available.
+Because number one just became number three.
+And let's also look at Deployments, ReplicaSets, and Pods.
+So now we see that the original ReplicaSet ending with cfcc
+has been scaled up back to three replicas.
+And then, the second ReplicaSet,
+associated with version 1.16 and revision two,
+has been scaled down to zero.
+So again, the state has been recorded with this ReplicaSet.
+And if I do want to, I can always rollback
+to this version, as well.
+Now keep in mind that you, by default,
+you can perform up to 10 consecutive rolling updates.
+And you can then rollback
+to any one of those 10 recorded states.
+In this case, we just performed
+one rolling update and one rollback.
+Now, finally, rolling updates and rollbacks
+are not specific for deployments, only.
+They are supported by other controllers, as well,
+such as DaemonSets and StatefulSets.

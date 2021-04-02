@@ -1,0 +1,31 @@
+Welcome to the API access demo.
+On an API-driven platform such as Kubernetes, being able to access the API is equally important to administrators and developers, whether through command line tools like kubectl and curl, or a browser.
+Either way, the user has to authenticate with the API server to be granted access to further query the API for each API access attempt.
+The easiest method of accessing the API securely is through the kubectl proxy, which authenticates the first proxy request and assumes all subsequent requests from the same source to be secure.
+In a terminal, let's initiate the kubectl proxy on the default port 8001 and run it in the background.
+With the proxy running, let's open a browser and navigate to 127.0.0.1 port 8001.
+It displays a list of the API groups available on our API server.
+We can pick any path in the listing and display further details about the group.
+So, let's pick the /apis/apps,
+and then we can include v1
+to see a listing of all the objects included in the apps/v1 group.
+We see deployments
+daemonsets, replicasets and a few others.
+In a similar fashion, while the proxy is running, we can use the CLI to query the APIs with curl.
+So, let's switch to a terminal and run curl 127.0.0.1:8001.
+We notice that it displays a list of the API groups identical with the list   displayed earlier in the browser.
+We can pick any resource group such as apis/apps
+we can add /v1,
+to see a listing of the objects included in the apps/v1 group.
+So far, we explored API queries from the browser and the cli and we did not have to identify at each request because the kubectl proxy was running in the background.
+So, let's stop the proxy.
+Let's list all the background jobs with the jobs command.
+Bring the jobs to 4 grand with fg and then finally with Control C terminate the kubectl proxy.
+Now, let's continue to explore the APIs, except this time without the kubectl proxy running, we need to identify ourselves to the API server with identifying tokens or keys and certificates for every single query attempt.
+To authenticate with a token you would need to first retrieve the token,
+then retrieve the API server's endpoint,
+and then finally, query the API server with curl
+And again, we see the same listing of all the API groups available,
+and we can also see a listing of the objects part of the apps/v1 group as well.
+So, in this video, we learned how to query the Kubernetes API through the kubectl proxy and then with the help of an identifying token.
+Thank you for watching. I will see you in the next video.

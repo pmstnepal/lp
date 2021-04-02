@@ -1,0 +1,29 @@
+Welcome to the Kubernetes Dashboard demo.
+The Kubernetes Dashboard provides us with a web interface to manage most aspects of our Kubernetes applications. It allows us to visualize our resources and to interact with the cluster to create, modify, and terminate applications.
+It allows us to visualize our resources, and to interact with the cluster to create, modify and terminate applications.
+In this video, we demonstrate how to enable the Kubernetes Dashboard addon, which, in latest Minikube releases, comes disabled by default.
+In order to take advantage of most features of the Dashboard, including resource utilization information, such as CPU and Memory, we will enable the metrics-server addon as well.
+With minikube started, let's list its addons and their status: minikube addons list.
+As we see, the Dashboard is disabled.
+And the metrics-server is disabled as well.
+So, let's enable the metrics-server, and then the Dashboard: minikube addons enable metrics-server
+And then we run the same command for the dashboard:minikube addons enable dashboard.
+Now, let's confirm that both addons have been enabled with minikube addons list.
+Now, we see both the Dashboard enabled and the metrics-server enabled as well.
+To open the Dashboard in the default browser on our workstation,
+let's run the minikube dashboard command.
+This will open a new tab in our default browser.
+At the top of the Dashboard we can switch between namespaces.
+While the navigation panel to the left allows us to switch between various API object types.
+By selecting Nodes,
+Pods,
+or any of the controllers,
+we display CPU and Memory utilization graphs, enabled in the Dashboard addon by the metrics-server addon for these object types.
+Each view allows us to access details and configuration properties specific to the displayed object.
+In addition, the Dashboard allows us to deploy applications and create Kubernetes API objects.
+By clicking on the "+" sign at the top right corner,
+we switch to the Create Interface with options to create objects from literal YAML or JSON content,
+from a file we can upload file,
+or we can just create an app with just a few clicks and a minimum amount of typing.
+In this video we explored the Kubernetes Dashboard and its key features for managing the cluster.
+Thank you for watching, and I will see you in the next video.

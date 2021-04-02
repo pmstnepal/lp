@@ -1,0 +1,18 @@
+Welcome to the kubectl installation demo.
+While with the latest minikube releases the kubectl command line tool is installed and configured automatically on the minikube virtual machine,
+it is often more practical to have the kubectl command line tool available on our workstation.
+When used from the minikube VM, it requires additional typing and it is less flexible than the kubectl command used directly from our workstation.
+In this video, we demonstrate how to install kubectl on our workstation,
+validate its configuration and display high level information about our minikube Kubernetes cluster.
+Let's download the latest kubectl package, make it executable and add it to our path.
+Now, let's display our Kubernetes cluster status and ensure it is running.
+If it is stopped, then issue the minikube start command to start your cluster.
+Now, with the cluster running, we can run kubectl commands against the cluster.
+So, let's display the kubectl's version.
+So, it is... we see that it is version 1.19.2.
+Now, let's display kubectl's configuration file, the kubeconfig file.
+This configuration file stores the API server's endpoint, certificates, keys an contacts data allowing the minikube user, the cluster administrator, to securely access the API server of the Kubernetes cluster through the kubectl command line tool.
+Now, let's display a list of default running services in our kubernetes cluster.
+The output shows endpoints for the API server and the DNS service.
+Now, in later chapters we will use kubectl again to manage containerized applications in our Kubernetes cluster.
+So, for now, thank you for watching, and I will see you in the next video.

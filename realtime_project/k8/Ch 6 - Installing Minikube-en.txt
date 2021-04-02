@@ -1,0 +1,36 @@
+Welcome to the minikube installation demo.
+In this video we demonstrate how to install the latest minikube release on Ubuntu Linux 18.04 LTS.
+The installation steps are similar on other Ubuntu Linux releases, such as 16.04 LTS, 19, 20.04 LTS or other Linux distributions .
+For environment isolation, we are installing the latest VirtualBox release as virtual machine manager.
+However, minikube works on Linux with another VM manager, KVM,
+or with container managers such as Docker or Podman to provide environment isolation in a container
+instead of a virtual machine, or without isolation, as a bare metal deployment.
+Before we begin, I would like to remind everyone that minikube was designed to be installed locally, directly on the native operating system of a workstation,
+not on a virtual machine nor on a cloud VM instance.
+So, let's proceed with the installation.
+Keep in mind that all installation steps are performed in a terminal.
+First, let's verify the virtualization support on this system,
+where a non-empty output confirms that virtualization is supported and enabled.
+Now, we prepare to download VirtualBox.
+We added the source repository specific for the Ubuntu 18.04 LTS Bionic release.
+Then we download and register the public key.
+Then we update the package list.
+And finally download and install the latest VirtualBox release.
+This process typically takes about a minute or two.
+And now VirtualBox is successfully installed.
+Next, we download the latest minikube package, make it executable and add it to our path.
+And now we are ready to start minikube.
+This process takes about two minutes.
+Minikube downloads the latest Kubernetes packages, creates a VirtualBox virtual machine downloads and configures Docker as its default container runtime,
+and then bootstraps a single node Kubernetes cluster with kubeadm inside the VirtualBox VM.
+It also installs and configures kubectl, the Kubernetes command line.
+Now, let's check minikube status with the minikube status command.
+The status shows that the host is running,
+the kubelet agent is running,
+the API server is running
+and that kubeconfig is configured for kubectl tool.
+Now we can safely stop minikube.
+Minikube is stopping inside the VirtualBox virtual machine and then it is shutting down the VM.
+So, in this video, we learned how to install the minikube Kubernetes cluster installation tool,
+together with a virtual machine manager, VirtualBox, and use them to provision a single node Kubernetes cluster on our workstation.
+Thank you for watching and I will see you in the next video.
